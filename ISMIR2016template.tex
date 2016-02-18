@@ -1,238 +1,106 @@
-% -----------------------------------------------
-% Template for ISMIR Papers
-% 2016 version, based on previous ISMIR templates
-
-% Requirements :
-% * 6+1 page length maximum
-% * 2MB maximum file size
-% * Copyright note must appear in the bottom left corner of first page
-% (see conference website for additional details)
-% -----------------------------------------------
-
 \documentclass{article}
 \usepackage{ismir,amsmath,cite}
 \usepackage{graphicx}
 \usepackage{color}
 
-% Title.
-% ------
-\title{Paper Template For ISMIR \conferenceyear}
+\title{Extracting Ground-Truth Information from MIDI Files}
 
-% Note: Please do NOT use \thanks or a \footnote in any of the author markup
-
-% Single address
-% To use with only one author or several with the same address
-% ---------------
 %\oneauthor
-% {Names should be omitted for double-blind reviewing}
-% {Affiliations should be omitted for double-blind reviewing}
+% {Colin Raffel and Daniel P. W. Ellis}
+% {LabROSA \\ Department of Electrical Engineering \\ Columbia University \\ New York, NY}
 
-% Two addresses
-% --------------
-%\twoauthors
-%  {First author} {School \\ Department}
-%  {Second author} {Company \\ Address}
-
-%% To make customize author list in Creative Common license, uncomment and customize the next line
-%  \def\authorname{First Author, Second Author} 
-
-
-% Three addresses
-% --------------
 \threeauthors
   {First Author} {Affiliation1 \\ {\tt author1@ismir.edu}}
   {Second Author} {\bf Retain these fake authors in\\\bf submission to preserve the formatting}
   {Third Author} {Affiliation3 \\ {\tt author3@ismir.edu}}
 
 %% To make customize author list in Creative Common license, uncomment and customize the next line
-%  \def\authorname{First Author, Second Author, Third Author} 
+%  \def\authorname{Colin Raffel, Daniel P. W. Ellis} 
 
-% Four or more addresses
-% OR alternative format for large number of co-authors
-% ------------
-%\multauthor
-%{First author$^1$ \hspace{1cm} Second author$^1$ \hspace{1cm} Third author$^2$} { \bfseries{Fourth author$^3$ \hspace{1cm} Fifth author$^2$ \hspace{1cm} Sixth author$^1$}\\
-%  $^1$ Department of Computer Science, University , Country\\
-%$^2$ International Laboratories, City, Country\\
-%$^3$  Company, Address\\
-%{\tt\small CorrespondenceAuthor@ismir.edu, PossibleOtherAuthor@ismir.edu}
-%}
-%\def\authorname{First author, Second author, Third author, Fourth author, Fifth author, Sixth author}
-
-
-\sloppy % please retain sloppy command for improved formatting
+\sloppy
 
 \begin{document}
 
-%
 \maketitle
-%
+
 \begin{abstract}
-The abstract should be placed at the top left column and should contain about 150-200 words.
+Abstract
 \end{abstract}
-%
-\section{Introduction}\label{sec:introduction}
 
-This template includes all the information about formatting manuscripts for the ISMIR \conferenceyear\ Conference.
-Please follow these guidelines to give the final proceedings a uniform look.
-Most of the required formatting is achieved automatically by using the supplied
-style file (\LaTeX) or template (Word).
-If you have any questions, please contact the Program Committee
-(\texttt{ismir\conferenceyear-papers@ismir.net}).
-This template can be downloaded from the ISMIR \conferenceyear\ web site (\texttt{http://ismir\conferenceyear.ismir.net}).
-%
-\section{Paper Length \& File Size}
-Instead of the strict limit of six pages (last used in ISMIR 2014), we adopt 
-a ``(6+1)-page policy'' from ISMIR 2015 for ISMIR 2016. This means, the paper may have a 
-maximum of 6 pages for technical content including figures and possible references 
-with one additional optional 7th page containing only references.
-Note that this is a strict requirement. 
-\textcolor{red}{The seventh page (if used at all) must
-not contain any other material except for references.} 
+\section{MIDI Files}\label{sec:introduction}
 
-Paper should be submitted as PDFs and the \textcolor{red}{file size is limited to 2MB}. Please compress images and figures as necessary before submitting.
+What is MIDI?
 
-\section{Page Size}\label{sec:page_size}
+What are MIDI files?
 
-The proceedings will be printed on
- \underline{portrait A4-size paper} \underline{(21.0cm x 29.7cm)}.
-All material on each page should fit within a rectangle of 17.2cm x 25.2cm,
-centered on the page, beginning 2.0cm
-from the top of the page and ending with 2.5cm from the bottom.
-The left and right margins should be 1.9cm.
-The text should be in two 8.2cm columns with a 0.8cm gutter.
-All text must be in a two-column format.
-Text must be fully justified.
+Where did they all come from? (Small filesize, hobbyist musicians) ringtones, karaoke
 
-\section{Typeset Text}\label{sec:typeset_text}
+Overview of paper
 
-\subsection{Normal or Body Text}\label{subsec:body}
+\section{Information Available in MIDI Files}
 
-Please use a 10pt (point) Times font. Sans-serif or non-proportional fonts
-can be used only for special purposes, such as distinguishing source code text.
+\subsection{Transcription}
 
-The first paragraph in each section should not be indented, but all other paragraphs should be.
+For transcription and score-informed source separation
 
-\subsection{Title and Authors}
+Better chroma for chord
 
-The title is 14pt Times, bold, caps, upper case, centered.
-Authors' names are omitted when submitting for double-blind reviewing.
-The following is for making a camera-ready version.
-Authors' names are centered.
-The lead author's name is to be listed first (left-most), and the co-authors' names after.
-If the addresses for all authors are the same, include the address only once, centered.
-If the authors have different addresses, put the addresses, evenly spaced, under each authors' name.
+Instrument activation
 
-\subsection{First Page Copyright Notice}
+\subsection{Onsets}
 
-Please include the copyright notice exactly as it appears here in the lower left-hand corner of the page.
-It is set in 8pt Times.
+Thanks to transcription.  However, of limited utility.
 
-\subsection{Page Numbering, Headers and Footers}
+\subsection{Musicological Features}
 
-Do not include headers, footers or page numbers in your submission.
-These will be added when the publications are assembled.
+Reference jSymbolic, music21
 
-\section{First Level Headings}
+\subsection{Meter}
 
-First level headings are in Times 10pt bold,
-centered with 1 line of space above the section head, and 1/2 space below it.
-For a section header immediately followed by a subsection header, the space should be merged.
+Beats and downbeats via time signature and tempo change events
 
-\subsection{Second Level Headings}
+\subsection{Key}
 
-Second level headings are in Times 10pt bold, flush left,
-with 1 line of space above the section head, and 1/2 space below it.
-The first letter of each significant word is capitalized.
+Key change events
 
-\subsubsection{Third and Further Level Headings}
+\section{Utilizing MIDI Files as Ground Truth}
 
-Third level headings are in Times 10pt italic, flush left,
-with 1/2 line of space above the section head, and 1/2 space below it.
-The first letter of each significant word is capitalized.
+\subsection{Matching}
 
-Using more than three levels of headings is highly discouraged.
+Required for nearly everything.
 
-\section{Footnotes and Figures}
+For small collections, you might not have to do anything.
 
-\subsection{Footnotes}
+For large collections, you need sophisticated methods because of lack of metadata.
 
-Indicate footnotes with a number in the text.\footnote{This is a footnote.}
-Use 8pt type for footnotes. Place the footnotes at the bottom of the page on which they appear.
-Precede the footnote with a 0.5pt horizontal rule.
+Beneficial for MIDI analysis too, thanks to matching it with audio metadata collections.
 
-\subsection{Figures, Tables and Captions}
+\subsection{Aligning}
 
-All artwork must be centered, neat, clean, and legible.
-All lines should be very dark for purposes of reproduction and art work should not be hand-drawn.
-The proceedings are not in color, and therefore all figures must make sense in black-and-white form.
-Figure and table numbers and captions always appear below the figure.
-Leave 1 line space between the figure or table and the caption.
-Each figure or table is numbered consecutively. Captions should be Times 10pt.
-Place tables/figures in text as close to the reference as possible.
-References to tables and figures should be capitalized, for example:
-see \figref{fig:example} and \tabref{tab:example}.
-Figures and tables may extend across both columns to a maximum width of 17.2cm.
+Required for all time-sensitive information.
 
-\begin{table}
- \begin{center}
- \begin{tabular}{|l|l|}
-  \hline
-  String value & Numeric value \\
-  \hline
-  Hello ISMIR  & \conferenceyear \\
-  \hline
- \end{tabular}
-\end{center}
- \caption{Table captions should be placed below the table.}
- \label{tab:example}
-\end{table}
+\subsection{Evaluating Quality}
 
-\begin{figure}
- \centerline{\framebox{
- \includegraphics[width=\columnwidth]{figure.png}}}
- \caption{Figure captions should be placed below the figure.}
- \label{fig:example}
-\end{figure}
+In some cases, the transcription may be bad.
 
-\section{Equations}
+\subsection{Extracting Information}
 
-Equations should be placed on separate lines and numbered.
-The number should be on the right side, in parentheses, as in \eqnref{relativity}.
+Short description of \texttt{pretty\_midi}.
 
-\begin{equation}\label{relativity}
-E=mc^{2}
-\end{equation}
+\section{Measuring a Baseline of Reliability for MIDI-Derived Ground Truth}
 
-\section{Citations}
+Match and align to Isophonics Beatles collection
 
-All bibliographical references should be listed at the end,
-inside a section named ``REFERENCES,'' numbered and in alphabetical order.
-All references listed should be cited in the text.
-When referring to a document, type the number in square brackets
-\cite{Author:00}, or for a range \cite{Author:00,Someone:10,Someone:04}.
+\subsection{Beat Experiment}
 
-% For bibtex users:
-\bibliography{ISMIRtemplate}
+\subsection{Key Experiment}
 
-% For non bibtex users:
-%\begin{thebibliography}{citations}
-%
-%\bibitem {Author:00}
-%E. Author.
-%``The Title of the Conference Paper,''
-%{\it Proceedings of the International Symposium
-%on Music Information Retrieval}, pp.~000--111, 2000.
-%
-%\bibitem{Someone:10}
-%A. Someone, B. Someone, and C. Someone.
-%``The Title of the Journal Paper,''
-%{\it Journal of New Music Research},
-%Vol.~A, No.~B, pp.~111--222, 2010.
-%
-%\bibitem{Someone:04} X. Someone and Y. Someone. {\it Title of the Book},
-%    Editorial Acme, Porto, 2012.
-%
-%\end{thebibliography}
+\section{Discussion}
+
+As-is, a lot of the information is usable.
+
+Improving audio-to-MIDI alignment as a proxy for getting additional metadata.
+
+Many additional avenues for improvement of measuring quality.
 
 \end{document}
