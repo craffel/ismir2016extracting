@@ -32,15 +32,29 @@ The results suggest that further research in audio-to-MIDI alignment will facili
 
 \section{MIDI Files}\label{sec:introduction}
 
-What is MIDI?
+MIDI (Music Instrument Digital Interface) is a hardware and software standard for communicating musical events.
+First proposed in 1983 \cite{international1983midi}, MIDI remains a highly pervasive standard both for storing musical scores and communicating information between digital music devices.
+Its use is perhaps in spite of its crudeness, which has been lamented since MIDI's early days \cite{moore1988dysfunctions}; most control values are quantized as 7-bit integers and information is transmitted at the relatively slow (by today's standards) 31,250 bits per second.
+Nevertheless, its efficiency and well-designed specification make it a convenient way of formatting digital music information.
 
-What are MIDI files?
+In the present work, we will focus on MIDI files, which in a simplistic view can be considered a compact way of storing a musical score.
+MIDI files are specified by an extension to the MIDI standard \cite{international1988standard} and consist of a sequence of MIDI messages organized in a specific format.
+A typical MIDI file contains timing and meter information in addition of a collection of one or more ``tracks'', each of which contains a sequence of notes and control messages.
+The General MIDI standard further specifies a collection of 128 instrument types on which the notes can be played, which standardizes the playback of MIDI files and has therefore been widely adopted.
 
-Where did they all come from? (Small filesize, hobbyist musicians) ringtones, karaoke
+When paired with a General MIDI synthesizer, MIDI files have been used as a sort of (highly lossy) perceptual audio codec, with entire songs only requiring a few kilobytes of storage.
+The early availability of this ``coding method'', combined with the expense of digital storage in the 90s, made MIDI files a highly pervasive method of storing and playing back songs before the advent of the MP3.
+Even after high-quality perceptual audio codecs were developed and storage prices plummeted, MIDI files remained in use in resource-scarce settings such as karaoke machines and cell phone ringtones.
+As a result, there is an abundance of MIDI file transcriptions of music available today; through a large-scale web scrape, we obtained 176,141 MIDI files with unique MD5 checksums.
 
-Overview of paper
+Given their wide availability, we believe that MIDI files are underutilized in the Music Information Retrieval community.
+In this paper, we start by outlining the various sources of information present in MIDI files and reference relevant works which utilize them in Section \ref{sec:information}.
+In Section \ref{sec:utilizing}, we discuss the steps needed to leverage MIDI-derived information as ground truth for content-based MIR.
+Based on these steps, we establish a baseline for the reliability of MIDI-derived ground truth by comparing it to handmade annotations in Section \ref{sec:measuring}.
+Finally, in Section \ref{sec:discussion}, we argue that improving the process of extracting information from MIDI files is a viable path for creating large amounts of ground truth data for MIR.
 
 \section{Information Available in MIDI Files}
+\label{sec:information}
 
 \subsection{Transcription}
 
@@ -67,6 +81,7 @@ Beats and downbeats via time signature and tempo change events
 Key change events
 
 \section{Utilizing MIDI Files as Ground Truth}
+\label{sec:utilizing}
 
 \subsection{Matching}
 
@@ -91,6 +106,7 @@ In some cases, the transcription may be bad.
 Short description of \texttt{pretty\_midi}.
 
 \section{Measuring a Baseline of Reliability for MIDI-Derived Ground Truth}
+\label{sec:measuring}
 
 Match and align to Isophonics Beatles collection
 
@@ -99,11 +115,14 @@ Match and align to Isophonics Beatles collection
 \subsection{Key Experiment}
 
 \section{Discussion}
+\label{sec:discussion}
 
 As-is, a lot of the information is usable.
 
 Improving audio-to-MIDI alignment as a proxy for getting additional metadata.
 
 Many additional avenues for improvement of measuring quality.
+
+\bibliography{refs}
 
 \end{document}
