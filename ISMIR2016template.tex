@@ -2,6 +2,7 @@
 \usepackage{ismir,amsmath,cite}
 \usepackage{graphicx}
 \usepackage{color}
+\usepackage{subcaption}
 
 \title{Extracting Ground-Truth Information from MIDI Files}
 
@@ -55,6 +56,43 @@ Finally, in Section \ref{sec:discussion}, we argue that improving the process of
 
 \section{Information Available in MIDI Files}
 \label{sec:information}
+
+While various aspects of MIDI files have been used in MIR research, to our knowledge there has been no unified overview of the information they provide, nor a discussion of the availability and reliability of this information in MIDI transcriptions found ``in the wild''.
+We therefore present an enumeration of the different information sources in a typical MIDI file and discuss their applicability to different MIR tasks.
+Because not all MIDI files are created equal, we also computed statistics about the presence and quantity of each information source across our collection of 176,141 unique MIDI files; the results can be seen in Figure \ref{fig:statistics} and will be discussed in the following sections.
+
+\begin{figure*}
+    \centering
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{n_instruments.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{n_tempos.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{n_signatures.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{n_keys.pdf}
+    \end{subfigure}
+
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{program_numbers.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{tempos.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{time_signatures.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.23\textwidth}
+        \includegraphics[width=\textwidth]{keys.pdf}
+    \end{subfigure}
+    \caption{Statistics about sources of information in 176,141 unique MIDI files scraped from the internet.
+    Histograms in the top row show the number of MIDI files which had a given number of events for different event types; in the bottom row, we show distributions of the different values set by these events across all MIDI files.
+    For example, about 125,000 MIDI files had a single time signature change event, and about 210,000 of the time signatures found in all of our MIDI files were 4/4.}
+    \label{fig:statistics}
+\end{figure*}
 
 \subsection{Transcription}
 
