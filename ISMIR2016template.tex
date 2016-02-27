@@ -96,15 +96,18 @@ Because not all MIDI files are created equal, we also computed statistics about 
 
 \subsection{Transcription}
 
-For transcription and score-informed source separation
+MIDI files are specified as a collection of ``tracks'', where each track consists of a sequence of MIDI events on one of 16 channels.
+Commonly used MIDI events are note on and note off messages, which together specify the start and end time of notes played at a given pitch on a given channel.
+Various control events also exist, such as pitch bends, which allow for finer control of the playback of the MIDI file.
+Program change events determine which instrument these events are sent to.
+The General MIDI standard defines a correspondence between program numbers and a pre-defined list of 128 instruments.
+The distribution of the total number of program change events (corresponding to the number of instruments) across the MIDI files in our collection and the distribution of these program numbers are shown in Figures \ref{fig:statistics}(a) and \ref{fig:statistics}(e) respectively.
 
-Better chroma for chord
-
-Instrument activation
-
-\subsection{Onsets}
-
-Thanks to transcription.  However, of limited utility.
+This specification makes MIDI files naturally suited to be used as transcriptions of pieces of music, due to the fact that they can be considered a sequence of notes played on a collection of instruments.
+As a result, many MIDI files are transcriptions and are thus commonly used as training data for automatic transcription systems (see \cite{turetsky2003ground} for an early example).
+This type of data also benefits score-informed source separation methods, which utilize the score as a prior to improve source separation quality \cite{ewert2014score}.
+An additional natural use of this information is for ``instrument activity detection'', i.e. determining when certain instruments are being played over the course of a piece of music.
+Finally, the enumeration of note start times lends itself naturally to onset detection, and MIDI data has therefore been used for this task \cite{bello2005tutorial}.
 
 \subsection{Musicological Features}
 
