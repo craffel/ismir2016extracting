@@ -119,7 +119,29 @@ For example, \cite{cuthbert2011feature} discusses the use of music21 and jSymbol
 
 \subsection{Meter}
 
-Beats and downbeats via time signature and tempo change events
+Timing in MIDI files is determined by two factors: The MIDI file's specified ``resolution'' and tempo change events.
+Each event within the MIDI file specifies the number of ``ticks'' between it and the preceding event.
+The resolution, which is stored in the MIDI file's header, sets the number of ticks which correspond to a single beat.
+The amount of time spanned by each tick is then determined according to the current tempo, as set by tempo change events.
+For example, if a MIDI file has a resolution of 220 ticks per quarter note and the current tempo is 120 beats per minute,\footnote{Actually, tempo change events specify the number of microseconds per quarter beat, but this can be readily converted to beats per minute.} each tick would correspond to $60/(120*220) = 0.002\overline{27}$ seconds.
+If a MIDI note-on event in this file is specified to occur 330 ticks after the previous event, then it would occur $330*0.002\overline{27} = .75$ seconds later.
+
+The timing in a MIDI file can vary over time by including many tempo change events.
+In practice, as shown in Figure \ref{fig:statistics}(b), most MIDI files only contain a single tempo change and are therefore transcribed at a fixed tempo.
+However, there are many MIDI files in our collection which have a large number of tempo change events (as indicated by the rightmost bars in Figure \ref{fig:statistics}(b)).
+We have found that this is a common practice for making the timing of a MIDI transcription closely match that of an audio recording of the same song.
+Despite the fact that the default tempo for a MIDI file is 120 beats per minute, Figure \ref{fig:statistics}(c) demonstrates that a wide range of tempos are used.
+In practice, we find that this is due to the fact that even when a single tempo event is used, it is often set so that the MIDI transcription's approximates that of an audio recording of the same song.
+
+Time signature change events further augment MIDI files with the ability to specify time signatures, and are also used to indicate the start of a measure.
+By convention, MIDI files have a time signature change at the first tick, although this is not a requirement.
+Because time signature changes are relatively rare in western popular music, the vast majority of the MIDI files in our collection contain a single time signature change, as seen in Figure \ref{fig:statistics}(c).
+Despite the fact that 4/4 is the default time signature for MIDI files and is pervasive in western popular music, a substantial portion (about half) included a non-4/4 time signature, as shown in Figure \ref{fig:statistics}(g).
+
+Because MIDI files are required to include tempo information in order to specify their timing, it is trivial to extract beat locations from a MIDI file.
+By convention, the first (down)beat in a MIDI transcription occurs at the first tick.
+Determining the beat locations in a MIDI file is therefore a simple matter of computing beat locations starting from the first tick and adjusting the tempo and time signature according to any tempo change or time signature change events found.
+Despite this capability, to our knowledge MIDI files have not been used as ground-truth for beat tracking algorithms.
 
 \subsection{Key}
 
