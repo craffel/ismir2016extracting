@@ -159,11 +159,24 @@ Lyric meta events, .kar files
 
 \subsection{What's Missing}
 
-Explicit labeling of melody or voice instrument
+Despite the wide variety of information sources available in MIDI files outlined in the previous sections, there are various types of information for which it is not possible (or not common) to store in MIDI files.
+While the General MIDI specfication provides a mapping between program numbers and instrument types, none of these instruments are ``voice'' instruments except for programs 52, 53, 54, 85, and 91, which correspond to ``Choir Aahs'', ``Voice Oohs'', ``Synth Choir'', ``Lead 6 (voice)'' and ``Pad 4 (choir)'' respectively.
+In practice, there is no specific program number (or numbers) which is consistently used to transcribe vocals.
+As a result, in a given MIDI file there is no reliable way of determining which voice or instrument is a transcription of the vocals in a song.
+Furthermore, because many MIDI files were designed for karaoke, the vocals may not be transcribed at all.
 
-Chords, segmentation
+While the MIDI specification does include a ``track name'' meta-event, it is seldom used and there is no standard for its use, and so MIDI files are further constrained to the general MIDI specification.
+It follows that there is no simple way to retrieve the ``melody'' from a MIDI transcription, although the fact that all instruments are transcribed separately can make its estimation more straightforward than for audio files.
+To our knowledge, there has been no research into automatically determining which instrument in a given MIDI file is a transcription of the melody or vocal line.
 
-Metadata
+There is also no explicit way for MIDI files to include chord labels or structural segmentation boundaries (e.g. ``verse'', ``chorus'', ``solo'').
+While this would in principle be possible thanks to the generic MIDI ``text'' meta-event, we have yet to find any MIDI files which store this information.
+Nevertheless, estimating chords in particular is greatly facilitated by the presence of a ground-truth transcription.
+Both music21 \cite{cuthbert2010music21} and melisma \cite{sleator2001melisma} include functionality for estimating chord sequences from symbolic data.
+
+While text meta-events could also be used to store song-level metadata (song title, artist name, etc.) in a MIDI file, we have seldom encountered this in practice.
+As a result, there is no standardized way to store this metadata in a MIDI file, although we found that a small portion of the filenames in our collection indicated the song title and occasionally the artist name.
+The lack of a metadata specification also prevents MIDI transcriptions from being attributed to the person who transcribed them.
 
 \section{Utilizing MIDI Files as Ground Truth}
 \label{sec:utilizing}
