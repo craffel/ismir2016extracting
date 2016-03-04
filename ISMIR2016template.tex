@@ -112,10 +112,10 @@ Finally, the enumeration of note start times lends itself naturally to onset det
 \subsection{Musicological Features}
 
 Because many MIDI files are transcriptions of music, they can also be used to compute high-level musicological characteristics of a given piece.
-Towards this end, the software library jSymbolic \cite{mckay2006jsymbolic} includes functionality to extract a wide variety of features, including instrumentation, rhythm, and pitch statistics.
-Similarly, music21 \cite{cuthbert2010music21} provides a general-purpose framework for analyzing collections of digital scores (including MIDI files).
+Towards this end, the software library \texttt{jSymbolic} \cite{mckay2006jsymbolic} includes functionality to extract a wide variety of features, including instrumentation, rhythm, and pitch statistics.
+Similarly, \texttt{music21} \cite{cuthbert2010music21} provides a general-purpose framework for analyzing collections of digital scores (including MIDI files).
 Computing these features on a collection of MIDI transcriptions is valuable for omputational musicology and can enable data-driven corpus studies.
-For example, \cite{cuthbert2011feature} discusses the use of music21 and jSymbolic to extract features from scores and use them to distinguish music from different composers and musical traditions.
+For example, \cite{cuthbert2011feature} discusses the use of \texttt{music21} and \texttt{jSymbolic} to extract features from scores and use them to distinguish music from different composers and musical traditions.
 
 \subsection{Meter}
 
@@ -178,7 +178,7 @@ To our knowledge, there has been no research into automatically determining whic
 There is also no explicit way for MIDI files to include chord labels or structural segmentation boundaries (e.g. ``verse'', ``chorus'', ``solo'').
 While this would in principle be possible thanks to the generic MIDI ``text'' meta-event, we have yet to find any MIDI files which store this information.
 Nevertheless, estimating chords in particular is greatly facilitated by the presence of a ground-truth transcription.
-Both music21 \cite{cuthbert2010music21} and melisma \cite{sleator2001melisma} include functionality for estimating chord sequences from symbolic data.
+Both \texttt{music21} \cite{cuthbert2010music21} and \texttt{melisma} \cite{sleator2001melisma} include functionality for estimating chord sequences from symbolic data.
 
 While text meta-events could also be used to store song-level metadata (song title, artist name, etc.) in a MIDI file, we have seldom encountered this in practice.
 As a result, there is no standardized way to store this metadata in a MIDI file, although we found that a small portion of the filenames in our collection indicated the song title and occasionally the artist name.
@@ -221,11 +221,11 @@ The information sources enumerated in Section \ref{sec:information} are not read
 For example, in order to extract the time (in seconds) of all onsets from a given instrument in a MIDI file, note events which occur on the same track and channel as program change events for the instrument must be collected and their timing must be computed from their relative ticks using the global tempo change events.
 Fortunately, various software libraries have been created to facilitate this process.
 
-The python library \texttt{pretty\_midi} \cite{raffel2014pretty_midi} simplifies the extraction useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
+The python library \texttt{pretty\char`_midi} \cite{raffel2014pretty_midi} simplifies the extraction useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
 For example, it contains functions for retrieving beats, onsets, note lists from specific instruments, and the times and values of key, tempo, and time signature changes.
 It also can be used to modify MIDI files, as well as to convert them to synthesized audio or a spectrogram-like piano roll representation.
-The aforementioned Java library jSymbolic contains an extensive collection of routines for computing musicological features from MIDI files.
-Finally, both music21 and melisma are capable of inferring high-level music information from symbolic data of various types, including MIDI.
+The aforementioned Java library \texttt{jSymbolic} contains an extensive collection of routines for computing musicological features from MIDI files.
+Finally, both \texttt{music21} and \texttt{melisma} are capable of inferring high-level music information from symbolic data of various types, including MIDI.
 
 \section{Measuring a Baseline of Reliability for MIDI-Derived Ground Truth}
 \label{sec:measuring}
