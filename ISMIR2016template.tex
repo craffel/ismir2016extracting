@@ -163,6 +163,7 @@ Occasionally, the generic text meta-event is also used for lyrics, but this is n
 In our collection, we found about 23,801 MIDI files which had at least one lyrics meta-event (about 13.3\%).
 
 \subsection{What's Missing}
+\label{sec:missing}
 
 Despite the wide variety of information sources available in MIDI files outlined in the previous sections, there are various types of information for which it is not possible (or not common) to store in MIDI files.
 While the General MIDI specfication provides a mapping between program numbers and instrument types, none of these instruments are ``voice'' instruments except for programs 52, 53, 54, 85, and 91, which correspond to ``Choir Aahs'', ``Voice Oohs'', ``Synth Choir'', ``Lead 6 (voice)'' and ``Pad 4 (choir)'' respectively.
@@ -186,27 +187,45 @@ The lack of a metadata specification also prevents MIDI transcriptions from bein
 \section{Utilizing MIDI Files as Ground Truth}
 \label{sec:utilizing}
 
+Utilizing MIDI files as ground-truth information for audio-content based MIR tasks requires the following:
+First, the artist and song of a MIDI file must be determined and it must be matched to an audio recording of the song it is a transcription of.
+Second, for many information sources, the MIDI file must be aligned in time with its matching audio recording.
+Finally, the compact low-level binary format used by MIDI files must be parsed so that the information can be readily extracted.
+
 \subsection{Matching}
 
-Required for nearly everything.
-
-For small collections, you might not have to do anything.
-
-For large collections, you need sophisticated methods because of lack of metadata.
-
-Beneficial for MIDI analysis too, thanks to matching it with audio metadata collections.
+Apart from metadata-agnostic corpus studies such as the one in \cite{mauch2012corpus}, determining what song a given MIDI file is is often a requirement.
+Matching a given MIDI file to, for example, a corresponding entry in the Million Song Dataset \cite{bertin2011million} can be beneficial even in experiments solely involving symbolic data analysis because it can provide additional useful information about the MIDI file such as the song's year, genre, and user-applied tags.
+Utilizing information in a MIDI file for ground-truth in audio content-based MIR tasks further requires that it be matched to an audio recording of the song.
+Unfortunately, the lack of a standardized method for storing song-level metadata in MIDI files (as discussed in Section \ref{sec:missing}) complicates this necessity.
+This has prompted the development of content-based matching methods; for example, early work by \cite{hu2003polyphonic} utilized the dynamic time warping (DTW) distance to compare spectrograms of MIDI syntheses and audio files and assigned matches by finding the minimal distance within the corpus.
+This approach is prohibitively slow for very large collections of MIDI and/or audio files, so \cite{raffel2015large} explored learning a mapping from spectrograms to downsampled sequences of binary vectors, which greatly accelerates DTW.
+\cite{raffel2016pruning} provided further speed-up by mapping entire spectrograms to fixed-length vectors in a Euclidean space where similar songs are mapped close together.
+These methods make it feasible to quickly match a MIDI file to an extremely large corpus of audio recordings.
 
 \subsection{Aligning}
 
-Required for all time-sensitive information.
+There is no guarantee that a MIDI trancsription for a given song was transcribed so that its timing matches an audio recording of a performance of the song.
+For the many sources of ground-truth data which depend on timing (e.g.\ beats, transcrtiption, or lyrics), the MIDI file must therefore have its timing adjusted so that it matches that of the performance.
+Fortunately, there has been a great deal of research into score-to-audio alignment, and MIDI-to-audio alignment can be seen as a special ``offline'' case.
+A highly common method is to use DTW or another edit-distance measure to find the best alignment between spectrograms of the synthesized MIDI and audio recording; see \cite{raffel2016optimizing} for a survey.
 
-\subsection{Evaluating Quality}
-
-In some cases, the transcription may be bad.
+In practice, audio-to-MIDI alignment systems can fail when there are overwhelming differences in timing or issues in the transcription, e.g. missing or incorrect instrumentation and/or notes.
+Ideally, the alignment and matching processes could automatically report the success of the alignment and the quality of the MIDI transcription.
+\cite{raffel2016optimizing} explores the ability of DTW-based alignment systems to automatically report a ``confidence'' score which denotes whether the alignment was successful or not.
+To our knowledge, there has not been any research into automatically determining the quality of a MIDI transcription.
 
 \subsection{Extracting Information}
 
-Short description of \texttt{pretty\_midi}.
+The information sources enumerated in Section \ref{sec:information} are not readily available from MIDI files due to fact that they follow a low-level binary protocol.
+For example, in order to extract the time (in seconds) of all onsets from a given instrument in a MIDI file, note events which occur on the same track and channel as program change events for the instrument must be collected and their timing must be computed from their relative ticks using the global tempo change events.
+Fortunately, various software libraries have been created to facilitate this process.
+
+The python library \texttt{pretty\_midi} \cite{raffel2014pretty_midi} simplifies the extraction useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
+For example, it contains functions for retrieving beats, onsets, note lists from specific instruments, and the times and values of key, tempo, and time signature changes.
+It also can be used to modify MIDI files, as well as to convert them to synthesized audio or a spectrogram-like piano roll representation.
+The aforementioned Java library jSymbolic contains an extensive collection of routines for computing musicological features from MIDI files.
+Finally, both music21 and melisma are capable of inferring high-level music information from symbolic data of various types, including MIDI.
 
 \section{Measuring a Baseline of Reliability for MIDI-Derived Ground Truth}
 \label{sec:measuring}
