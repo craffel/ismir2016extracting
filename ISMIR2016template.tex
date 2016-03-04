@@ -138,9 +138,9 @@ By convention, MIDI files have a time signature change at the first tick, althou
 Because time signature changes are relatively rare in western popular music, the vast majority of the MIDI files in our collection contain a single time signature change, as seen in Figure \ref{fig:statistics}(c).
 Despite the fact that 4/4 is the default time signature for MIDI files and is pervasive in western popular music, a substantial portion (about half) included a non-4/4 time signature, as shown in Figure \ref{fig:statistics}(g).
 
-Because MIDI files are required to include tempo information in order to specify their timing, it is trivial to extract beat locations from a MIDI file.
+Because MIDI files are required to include tempo information in order to specify their timing, it is straightforward to extract beat locations from a MIDI file.
 By convention, the first (down)beat in a MIDI transcription occurs at the first tick.
-Determining the beat locations in a MIDI file is therefore a simple matter of computing beat locations starting from the first tick and adjusting the tempo and time signature according to any tempo change or time signature change events found.
+Determining the beat locations in a MIDI file therefore involves computing beat locations starting from the first tick and adjusting the tempo and time signature according to any tempo change or time signature change events found.
 Despite this capability, to our knowledge MIDI files have not been used as ground-truth for beat tracking algorithms.
 However, \cite{mauch2012corpus} utilized a large dataset of MIDI files to studydrum patterns using natural language processing techniques.
 
