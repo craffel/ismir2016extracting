@@ -227,14 +227,27 @@ It also can be used to modify MIDI files, as well as to convert them to synthesi
 The aforementioned Java library \texttt{jSymbolic} contains an extensive collection of routines for computing musicological features from MIDI files.
 Finally, both \texttt{music21} and \texttt{melisma} are capable of inferring high-level music information from symbolic data of various types, including MIDI.
 
-\section{Measuring a Baseline of Reliability for MIDI-Derived Ground Truth}
+\section{Measuring a Baseline of Reliability for MIDI-Derived Information}
 \label{sec:measuring}
 
-Match and align to Isophonics Beatles collection
+Given the potential availability of ground-truth information in MIDI transcriptions, a natural question is the reliability of this data in MIDI transcriptions found ``in the wild''.
+A straightforward way to evaluate the quality of data derived from a MIDI transcription of a given song would be to compare it to pre-existing hand-made annotations for the song.
+Given a MIDI transcription and human-annotated ground truth data, we can extract corresponding information from the MIDI file and compare using the heuristic evaluation metrics commonly used in the Music Information Retrieval Evaluation eXchange (MIREX) \cite{downie2008music}.
+We therefore leveraged the Isophonics Beatles annotations \cite{mauch2009omras2} as a source of ground-truth to compare against MIDI-derived information because MIDI transcriptions of these songs are readily available due to The Beatles' popularity.
 
-\subsection{Beat Experiment}
+Our choice in tasks depends on the overlap in sources of information in the Isophonics annotations and MIDI transcriptions.
+Isophonics includes beat times, song-level key information, chord changes, and structural segmentation.
+As noted in Section \ref{sec:information}, beat times and key changes may be included in MIDI files but there is no way to include chord change or structural segmentation information.
+We therefore performed experiments to evaluate the quality of key labels and beat times available in MIDI files.
+Fortuitously, these two experiments give us an insight into both song-level timing-agnostic information (key) and alignment-dependent timing-critical information (beat).
+
+To carry out these experiments, we first manually identified 545 MIDI files from our collection which had filenames indicating that they were transcriptions of songs from the Isophonics Beatles collection.
+Of the 180 songs in the Isophonics Beatles collection, we found MIDI transcriptions for all but 11.
+The median number of MIDI transcriptions per song was 2; the song ``Eleanor Rigby'' had the most, with 14 unique transcriptions.
 
 \subsection{Key Experiment}
+
+\subsection{Beat Experiment}
 
 \section{Discussion}
 \label{sec:discussion}
