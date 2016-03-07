@@ -179,6 +179,7 @@ There is also no explicit way for MIDI files to include chord labels or structur
 While this would in principle be possible thanks to the generic MIDI ``text'' meta-event, we have yet to find any MIDI files which store this information.
 Nevertheless, estimating chords in particular is greatly facilitated by the presence of a ground-truth transcription.
 Both \texttt{music21} \cite{cuthbert2010music21} and \texttt{melisma} \cite{sleator2001melisma} include functionality for estimating chord sequences from symbolic data.
+Rhodes et al.\cite{rhodes2007bayesian} also proposed a symbolic chord esimation method using Bayesian Model Selection, which was shown to outperform \texttt{melisma} on a dataset of Beatles MIDI files in \cite{ewert2012towards}.
 
 While text meta-events could also be used to store song-level metadata (song title, artist name, etc.) in a MIDI file, we have seldom encountered this in practice.
 As a result, there is no standardized way to store this metadata in a MIDI file, although we found that a small portion of the filenames in our collection indicated the song title and occasionally the artist name.
@@ -208,7 +209,7 @@ These methods make it feasible to quickly match a MIDI file to an extremely larg
 There is no guarantee that a MIDI transcription for a given song was transcribed so that its timing matches an audio recording of a performance of the song.
 For the many sources of ground-truth data which depend on timing (e.g.\ beats, transcription, or lyrics), the MIDI file must therefore have its timing adjusted so that it matches that of the performance.
 Fortunately, there has been a great deal of research into score-to-audio alignment, and MIDI-to-audio alignment can be seen as a special ``offline'' case.
-A highly common method is to use DTW or another edit-distance measure to find the best alignment between spectrograms of the synthesized MIDI and audio recording; see \cite{raffel2016optimizing} for a survey.
+A highly common method is to use DTW or another edit-distance measure to find the best alignment between spectrograms of the synthesized MIDI and audio recording; see \cite{raffel2016optimizing} or \cite{ewert2012towards} for surveys.
 
 In practice, audio-to-MIDI alignment systems can fail when there are overwhelming differences in timing or issues in the transcription, e.g. missing or incorrect instrumentation and/or notes.
 Ideally, the alignment and matching processes could automatically report the success of the alignment and the quality of the MIDI transcription.
