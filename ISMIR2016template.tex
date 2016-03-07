@@ -40,7 +40,7 @@ Nevertheless, its efficiency and well-designed specification make it a convenien
 
 In the present work, we will focus on MIDI files, which in a simplistic view can be considered a compact way of storing a musical score.
 MIDI files are specified by an extension to the MIDI standard \cite{international1988standard} and consist of a sequence of MIDI messages organized in a specific format.
-A typical MIDI file contains timing and meter information in addition of a collection of one or more ``tracks'', each of which contains a sequence of notes and control messages.
+A typical MIDI file contains timing and meter information in addition to a collection of one or more ``tracks'', each of which contains a sequence of notes and control messages.
 The General MIDI standard further specifies a collection of 128 instrument types on which the notes can be played, which standardizes the playback of MIDI files and has therefore been widely adopted.
 
 When paired with a General MIDI synthesizer, MIDI files have been used as a sort of (highly lossy) perceptual audio codec, with entire songs only requiring a few kilobytes of storage.
@@ -114,8 +114,8 @@ Finally, the enumeration of note start times lends itself naturally to onset det
 Because many MIDI files are transcriptions of music, they can also be used to compute high-level musicological characteristics of a given piece.
 Towards this end, the software library \texttt{jSymbolic} \cite{mckay2006jsymbolic} includes functionality to extract a wide variety of features, including instrumentation, rhythm, and pitch statistics.
 Similarly, \texttt{music21} \cite{cuthbert2010music21} provides a general-purpose framework for analyzing collections of digital scores (including MIDI files).
-Computing these features on a collection of MIDI transcriptions is valuable for omputational musicology and can enable data-driven corpus studies.
-For example, \cite{cuthbert2011feature} discusses the use of \texttt{music21} and \texttt{jSymbolic} to extract features from scores and use them to distinguish music from different composers and musical traditions.
+Computing these features on a collection of MIDI transcriptions is valuable for computational musicology and can enable data-driven corpus studies.
+For example, \cite{cuthbert2011feature} discusses the use of \texttt{music21} and \texttt{jSymbolic} to extract features from scores and uses them to distinguish music from different composers and musical traditions.
 
 \subsection{Meter}
 
@@ -131,7 +131,7 @@ In practice, as shown in Figure \ref{fig:statistics}(b), most MIDI files only co
 However, there are many MIDI files in our collection which have a large number of tempo change events (as indicated by the rightmost bars in Figure \ref{fig:statistics}(b)).
 We have found that this is a common practice for making the timing of a MIDI transcription closely match that of an audio recording of the same song.
 Despite the fact that the default tempo for a MIDI file is 120 beats per minute, Figure \ref{fig:statistics}(c) demonstrates that a wide range of tempos are used.
-In practice, we find that this is due to the fact that even when a single tempo event is used, it is often set so that the MIDI transcription's approximates that of an audio recording of the same song.
+In practice, we find that this is due to the fact that even when a single tempo event is used, it is often set so that the MIDI transcription's tempo approximates that of an audio recording of the same song.
 
 Time signature change events further augment MIDI files with the ability to specify time signatures, and are also used to indicate the start of a measure.
 By convention, MIDI files have a time signature change at the first tick, although this is not a requirement.
@@ -142,7 +142,7 @@ Because MIDI files are required to include tempo information in order to specify
 By convention, the first (down)beat in a MIDI transcription occurs at the first tick.
 Determining the beat locations in a MIDI file therefore involves computing beat locations starting from the first tick and adjusting the tempo and time signature according to any tempo change or time signature change events found.
 Despite this capability, to our knowledge MIDI files have not been used as ground-truth for beat tracking algorithms.
-However, \cite{mauch2012corpus} utilized a large dataset of MIDI files to studydrum patterns using natural language processing techniques.
+However, \cite{mauch2012corpus} utilized a large dataset of MIDI files to study drum patterns using natural language processing techniques.
 
 
 \subsection{Key}
@@ -153,14 +153,14 @@ Key changes simply give a suggestion as to the tonal content and do not effect p
 As seen in Figure \ref{fig:statistics}(d), this results in many MIDI files omitting key change events altogether.
 A further complication is that a disproportionate number (about half) of the MIDI files in our collection had key changes to the key of C major.
 This disagrees with corpus studies of popular music, e.g. \cite{carlton2012analyzed} which found that only about 26\% of songs from the Billboard 100 were in C major.
-We believe this is because many MIDI transcription software packaged automatically insert a C major key change at the beginning of the file.
+We believe this is because many MIDI transcription software packages automatically insert a C major key change at the beginning of the file.
 
 \subsection{Lyrics}
 
 Lyrics can be added to MIDI transcriptions by the use of lyrics meta-events, which allow for timestamped text to be included over the course of the song.
 This capability enables the common use of MIDI files for karaoke; in fact, a separate file extension ``.kar'' is often used for MIDI files which include lyrics meta-events.
 Occasionally, the generic text meta-event is also used for lyrics, but this is not its intended use.
-In our collection, we found about 23,801 MIDI files which had at least one lyrics meta-event (about 13.3\%).
+In our collection, we found 23,801 MIDI files (about 13.3\%) which had at least one lyrics meta-event.
 
 \subsection{What's Missing}
 \label{sec:missing}
@@ -168,10 +168,10 @@ In our collection, we found about 23,801 MIDI files which had at least one lyric
 Despite the wide variety of information sources available in MIDI files outlined in the previous sections, there are various types of information for which it is not possible (or not common) to store in MIDI files.
 While the General MIDI specfication provides a mapping between program numbers and instrument types, none of these instruments are ``voice'' instruments except for programs 52, 53, 54, 85, and 91, which correspond to ``Choir Aahs'', ``Voice Oohs'', ``Synth Choir'', ``Lead 6 (voice)'' and ``Pad 4 (choir)'' respectively.
 In practice, there is no specific program number (or numbers) which is consistently used to transcribe vocals.
-As a result, in a given MIDI file there is no reliable way of determining which voice or instrument is a transcription of the vocals in a song.
+As a result, in a given MIDI file there is no reliable way of determining which instrument is a transcription of the vocals in a song.
 Furthermore, because many MIDI files were designed for karaoke, the vocals may not be transcribed at all.
 
-While the MIDI specification does include a ``track name'' meta-event, it is seldom used and there is no standard for its use, and so MIDI files are further constrained to the general MIDI specification.
+While the MIDI specification does include a ``track name'' meta-event, it is seldom used and there is no standard for its use, and so the instruments in MIDI files are further constrained to the General MIDI specification.
 It follows that there is no simple way to retrieve the ``melody'' from a MIDI transcription, although the fact that all instruments are transcribed separately can make its estimation more straightforward than for audio files.
 To our knowledge, there has been no research into automatically determining which instrument in a given MIDI file is a transcription of the melody or vocal line.
 
@@ -187,7 +187,7 @@ The lack of a metadata specification also prevents MIDI transcriptions from bein
 \section{Utilizing MIDI Files as Ground Truth}
 \label{sec:utilizing}
 
-Utilizing MIDI files as ground-truth information for audio-content based MIR tasks requires the following:
+Utilizing MIDI files as ground-truth information for audio content-based MIR tasks requires the following:
 First, the artist and song of a MIDI file must be determined and it must be matched to an audio recording of the song it is a transcription of.
 Second, for many information sources, the MIDI file must be aligned in time with its matching audio recording.
 Finally, the compact low-level binary format used by MIDI files must be parsed so that the information can be readily extracted.
@@ -198,15 +198,15 @@ Apart from metadata-agnostic corpus studies such as the one in \cite{mauch2012co
 Matching a given MIDI file to, for example, a corresponding entry in the Million Song Dataset \cite{bertin2011million} can be beneficial even in experiments solely involving symbolic data analysis because it can provide additional useful information about the MIDI file such as the song's year, genre, and user-applied tags.
 Utilizing information in a MIDI file for ground-truth in audio content-based MIR tasks further requires that it be matched to an audio recording of the song.
 Unfortunately, the lack of a standardized method for storing song-level metadata in MIDI files (as discussed in Section \ref{sec:missing}) complicates this necessity.
-This has prompted the development of content-based matching methods; for example, early work by \cite{hu2003polyphonic} utilized the dynamic time warping (DTW) distance to compare spectrograms of MIDI syntheses and audio files and assigned matches by finding the minimal distance within the corpus.
+This has prompted the development of content-based matching methods; for example, early work by Hu et al.\cite{hu2003polyphonic} utilized the dynamic time warping (DTW) distance to compare spectrograms of MIDI syntheses and audio files and assigned matches by finding the minimal distance within the corpus.
 This approach is prohibitively slow for very large collections of MIDI and/or audio files, so \cite{raffel2015large} explored learning a mapping from spectrograms to downsampled sequences of binary vectors, which greatly accelerates DTW.
 \cite{raffel2016pruning} provided further speed-up by mapping entire spectrograms to fixed-length vectors in a Euclidean space where similar songs are mapped close together.
 These methods make it feasible to quickly match a MIDI file to an extremely large corpus of audio recordings.
 
 \subsection{Aligning}
 
-There is no guarantee that a MIDI trancsription for a given song was transcribed so that its timing matches an audio recording of a performance of the song.
-For the many sources of ground-truth data which depend on timing (e.g.\ beats, transcrtiption, or lyrics), the MIDI file must therefore have its timing adjusted so that it matches that of the performance.
+There is no guarantee that a MIDI transcription for a given song was transcribed so that its timing matches an audio recording of a performance of the song.
+For the many sources of ground-truth data which depend on timing (e.g.\ beats, transcription, or lyrics), the MIDI file must therefore have its timing adjusted so that it matches that of the performance.
 Fortunately, there has been a great deal of research into score-to-audio alignment, and MIDI-to-audio alignment can be seen as a special ``offline'' case.
 A highly common method is to use DTW or another edit-distance measure to find the best alignment between spectrograms of the synthesized MIDI and audio recording; see \cite{raffel2016optimizing} for a survey.
 
@@ -221,7 +221,7 @@ The information sources enumerated in Section \ref{sec:information} are not read
 For example, in order to extract the time (in seconds) of all onsets from a given instrument in a MIDI file, note events which occur on the same track and channel as program change events for the instrument must be collected and their timing must be computed from their relative ticks using the global tempo change events.
 Fortunately, various software libraries have been created to facilitate this process.
 
-The python library \texttt{pretty\char`_midi} \cite{raffel2014pretty_midi} simplifies the extraction useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
+The Python library \texttt{pretty\char`_midi} \cite{raffel2014pretty_midi} simplifies the extraction useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
 For example, it contains functions for retrieving beats, onsets, note lists from specific instruments, and the times and values of key, tempo, and time signature changes.
 It also can be used to modify MIDI files, as well as to convert them to synthesized audio or a spectrogram-like piano roll representation.
 The aforementioned Java library \texttt{jSymbolic} contains an extensive collection of routines for computing musicological features from MIDI files.
@@ -237,7 +237,7 @@ We therefore leveraged the Isophonics Beatles annotations \cite{mauch2009omras2}
 
 Our choice in tasks depends on the overlap in sources of information in the Isophonics annotations and MIDI transcriptions.
 Isophonics includes beat times, song-level key information, chord changes, and structural segmentation.
-As noted in Section \ref{sec:information}, beat times and key changes may be included in MIDI files but there is no way to include chord change or structural segmentation information.
+As noted in Section \ref{sec:information}, beat times and key changes may be included in MIDI files but there is no standard way to include chord change or structural segmentation information.
 We therefore performed experiments to evaluate the quality of key labels and beat times available in MIDI files.
 Fortuitously, these two experiments give us an insight into both song-level timing-agnostic information (key) and alignment-dependent timing-critical information (beat).
 
