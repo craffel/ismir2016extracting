@@ -3,6 +3,8 @@
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{subcaption}
+\usepackage{url}
+\usepackage{booktabs}
 
 \title{Extracting Ground-Truth Information from MIDI Files}
 
@@ -146,6 +148,7 @@ However, \cite{mauch2012corpus} utilized a large dataset of MIDI files to study 
 
 
 \subsection{Key}
+\label{sec:key}
 
 An additional useful event in MIDI files is the key change event.
 Any of the 24 major or minor keys may be specified.
@@ -247,6 +250,47 @@ Of the 180 songs in the Isophonics Beatles collection, we found MIDI transcripti
 The median number of MIDI transcriptions per song was 2; the song ``Eleanor Rigby'' had the most, with 14 unique transcriptions.
 
 \subsection{Key Experiment}
+
+In our first experiment, we evaluated the reliability of key change events in MIDI files.
+We followed the MIREX methodology for comparing keys \cite{ehmann2016mirex}, which proceeds as follows:
+Each song may only have a single key.
+All keys must be either major or minor, e.g. ``C\# Major'' and ``E minor'' are allowed but ``D Mixolydian'' is not.
+An estimated key is given a score of 1.0 when it exactly matches a ground-truth key, 0.5 when it is a perfect fifth above the ground-truth key, 0.3 when it is a relative major or minor, 0.2 when it is a parallel major or minor, and 0.0 otherwise.
+
+The Isophincs annotations mostly follow this format, except that 21 songs contained multiple key annotations and 7 others contained non-major/minor keys.
+To simplify evaluation, we discarded these songs, leaving 179 ground-truth key annotations.
+Of our 545 Beatles MIDIs, 221 had no key change event and 5 had more than one, which we also omitted from evaluation.
+This left 223 MIDI files for which we extracted key annotations and compared them to valid Isophonics annotations.
+Because of the preponderance of C major key change events noted in Section \ref{sec:key}, we also separately evaluated MIDI-derived C Major and non-C major instances separately to see whether they were less reliable.
+
+As a baseline, we also extracted keys using the QM Vamp Key Detector plugin \cite{cannam2015mirex} whose underlying algorithm is based on \cite{noland2007signal} which finds the key profile which best correlates with the chromagram of a given song.
+This plugin achieved the highest score in MIREX 2013, and has been the only key detection algorithm submitted in 2014 and 2015.
+This gives us a reasonable expectation for a good audio content-based key estimator; to determine the extent to which human annotators agree on ground-truth key labels, we also collected key labels for Beatles' songs from \texttt{whatkeyisitin.com}.
+As with the Isophonics key annotations, some songs had multiple and/or modal key labels; we discarded these and ended up with 145 labels for songs in the Isophonics dataset.
+
+\begin{table}
+\begin{center}
+\begin{tabular}{lrr}
+  \toprule
+  Source                     & Score & Comparisons \\
+  \midrule
+  MIDI, all keys             & 0.400 &         223 \\
+  MIDI, C major only         & 0.167 &         146 \\
+  MIDI, non-C major          & 0.842 &          77 \\
+  QM Key Detector            & 0.687 &         151 \\
+  \texttt{whatkeyisitin.com} & 0.857 &         145 \\
+  \bottomrule
+\end{tabular}
+\end{center}
+  \caption{Mean scores achieved, and the number of comparisons made, by different datasets compared to Isophonics Beatles key annotations.}
+  \label{tab:key}
+\end{table}
+
+The mean scores resulting from comparing each dataset to the Isophonics annotations can be seen in Table \ref{tab:key}.
+At first glance, the mean score of $0.4$ achieved by MIDI key change messages is depressing.
+However, by omitting all MIDI files with C major key events (which achieved a mean score of $0.167$), the mean score jumps to $0.842$.
+This is comparable to the human-to-human baseline, and is substantially higher than the algorithmically estimated score.
+We therefore propose that \textit{non-C major} MIDI key change events are as reliable as hand-annotated labels, but that C major key annotations in MIDI files are effectively useless.
 
 \subsection{Beat Experiment}
 
