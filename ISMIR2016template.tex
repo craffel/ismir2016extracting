@@ -343,13 +343,16 @@ Finally, we found that the confidence score produced by the alignment system is 
 \section{Discussion}
 \label{sec:discussion}
 
-As-is, a lot of the information is usable.
+Our results suggest that MIDI files have the potential to be valuable sources of ground-truth information, but their usage may come with a variety of caveats.
+However, due to the incredible number of MIDI transcriptions available, we submit that developing better methods to leverage information present in MIDI files is a tantalizing avenue for obtaining more ground-truth data for music information retrieval.
+For example, while C-major key annotations cannot be trusted, developing a highly reliable C-major vs. non-C-major classification algorithm for symbolic data (which would ostensibly be much more tractable than creating a perfect general-purpose audio content-based key estimation algorithm) would enable the reliable usage of all key change messages in MIDI files.
+Further work into robust audio-to-MIDI alignment is also warranted in order to leverage timing-critical information, as is the mostly neglected question of reliable alignment confidence score reporting.
+Novel questions such as determining which MIDI instrument corresponds to the vocal or melody instrument in a given transcription, or determining whether all instruments have been transcribed, would also facilitate the use of MIDI files as ground-truth transcriptions.
+Fortunately, all of these tasks are made easier by the fact that MIDI files are specified in a format from which it is straightforward to extract pitch information.
+Any techniques developed towards this end could also be applied to other ubiquitous symbolic digital music formats, such as MusicXML \cite{good2001musicxml} or GuitarPro.\footnote{\texttt{http://wwww.guitar-pro.com}}
 
-Improving audio-to-MIDI alignment as a proxy for getting additional metadata.
-
-Many additional avenues for improvement of measuring quality.
-
-More information sources: Guitar Pro, MusicXML
+To facilitate further investigation, all 176,141 of the MIDI files we obtained in our web scrape (including our collection of 545 Beatles MIDIs) are available online,\footnote{\texttt{http://url-redacted.com}} as well as all of the code used in the experiments in this paper.\footnote{\texttt{http://url-redacted.com}}
+We hope this data and discussion facilitates a groundswell of MIDI utilization in the MIR community.
 
 \bibliography{refs}
 
