@@ -294,6 +294,52 @@ We therefore propose that \textit{non-C major} MIDI key change events are as rel
 
 \subsection{Beat Experiment}
 
+\begin{figure*}
+    \centerline{
+    \includegraphics[width=\textwidth]{beat_scores.pdf}}
+    \caption{Beat evaluation metric scores (compared to Isophonics beat annotations) and alignment confidence scores achieved by different audio-to-MIDI alignments of Beatles MIDI files, with each shown as a blue dot.
+Mean scores for each metric achieved by the \texttt{DBNBeatTracker} \cite{bock2014multi} are shown as dashed lines.}
+    \label{fig:beat}
+\end{figure*}
+
+Utilizing many of the sources of information in MIDI files in audio content-based MIR tasks depends on the precise alignment of a given MIDI file to an audio recording of a performance of the same song.
+We therefore performed an additional experiment to evaluate the quality of MIDI-derived beat annotations, which are evaluated on the scale of tens of milliseconds.
+Producing valid beat annotations from a MIDI file requires not only that the file's timing information is correct, but also that it has been aligned with high precision.
+
+To align our Beatles MIDI files to corresponding audio recordings, we used the scheme proposed in \cite{raffel2016optimizing}, which was found by a large-scale search over common dynamic time warping-based audio-to-MIDI alignment systems.
+We give an outline of this method below; for a full description, see \cite{raffel2016optimizing}.
+First, the MIDI file is synthesized using the \texttt{fluidsynth} program.
+Log-magnitude, constant-Q spectrograms of the synthesized MIDI and audio recording are extracted and their pairwise cosine distance matrix is computed.
+The lowest-cost path through the distance matrix is then found using dynamic time warping, with the constraint that the path must span at least 96\% of the shorter of the two spectrograms.
+In addition, all paths are penalized by adding the median value of the distance matrix each time a frame in one spectrogram is mapped to multiple frames in the other.
+Finally, a ``confidence score'' is computed as the mean pairwise distance along the lowest-cost path, normalized by mean of the submatrix spanned by the path.
+
+We followed \cite{raffel2016optimizing} exactly, except for the following changes:
+First, instead of computing spectrograms with a hop size of 46 milliseconds, we used a hop of 23 milliseconds.
+This finer timescale is more appropriate for the beat evaluation metrics we will use, which have tolerances measured in tens of milliseconds.
+Second, the confidence scores computed using the method of \cite{raffel2016optimizing} lie in the range $[0.5, 1.0]$ where $0.5$ corresponds to ``highly confident'' and $1.0$ corresponds to ``likely wrong''; we re-scaled this range by subtracting $1$ and multiplying by $-2$, which results in the more easily interpretable range of $[0.0, 1.0]$ where higher scores mean higher confidence.
+
+We used \texttt{pretty\char`_midi}'s \texttt{get\char`_beats} method to extract beat times from our 545 Beatles MIDI files, and adjusted each beat's timing according to the MIDI file's alignment to corresponding audio recordings.
+For evaluation, we used the F-measure, Any Metric Level Continuous and Information Gain metrics described in \cite{davies2009evaluation}, as implemented in the evaluation library \texttt{mir\char`_eval} \cite{raffel2014mir_eval}.
+As a baseline, we also computed beat locations using the \texttt{DBNBeatTracker} from the \texttt{madmom} software library,\footnote{\texttt{https://github.com/CPJKU/madmom}} which is based on the algorithm from \cite{bock2014multi}.
+This represents a state-of-the-art general-purpose beat tracker which, on the Beatles data, can reliably produce high-quality annotations.
+If MIDI-derived beat annotations are to be taken as ground truth, they must achieve scores similar to or higher than the \texttt{DBNBeatTracker}.
+
+We visualize the resulting scores in Figure \ref{fig:beat}.
+Because we don't expect beats to be extracted accurately from MIDI files which are poor transcriptions, we plotted each MIDI file as a single point whose x coordinate corresponds to the MIDI alignment confidence score and whose y coordinate is the resulting evaluation metric score achieved.
+Ideally, all points in these plots would be clustered in the bottom left (corresponding to failed alignments with low confidence scores) or top right (corresponding to a successful alignment and beat annotation extraction with a high confidence score).
+For reference, we plot the mean score achieved by the \texttt{DBNBeatTracker} as dotted lines for each metric.
+From these plots, we can see that in many cases, MIDI ground truth achieves near-perfect scores, particularly for the F-Measure and Any Metric Level Continuous metrics.
+However, there is no reliable correspondence between high confidence scores and high evaluation metric scores.
+For example, while it appears qualitatively that a prerequisite for an accurate MIDI-derived beat annotation is a confidence score above $.5$, there are many MIDI files which had high confidence scores but low metric scores (appearing in the bottom-right corner of the plots in Figure \ref{fig:beat}).
+
+We found that this undesirable behavior was often caused by a few issues:
+First, it is common that the alignment system would produce alignments which were slightly ``sloppy'', i.e.\ were off by one or two frames (corresponding to 23 milliseconds each) in places.
+This had less of an effect on the F-measure and Any Metric Level Total metrics, which are invariant to small temporal errors up to a certain threshold, but deflated the Information Gain scores because this metric rewards consistent beat errors.
+Second, many MIDI files had tempos which were at a different metric level than the annotations (e.g.\ double, half, or a third of the tempo).
+This effected the Any Metric Level Total scores the least because it is invariant to these issues, except for the handful of files which were transcribed at a third of the tempo.
+Finally, we found that the confidence score produced by the alignment system is most reliable at producing a low score in the event of a total failure (indicated by points in the bottom left of the plots in Figure \ref{fig:beat}), but was otherwise insensitive to the more minor issues that can cause beat evaluation metrics to produce low scores.
+
 \section{Discussion}
 \label{sec:discussion}
 
