@@ -257,6 +257,7 @@ We followed the MIREX methodology for comparing keys \cite{ehmann2016mirex}, whi
 Each song may only have a single key.
 All keys must be either major or minor, e.g.\ ``C\# Major'' and ``E minor'' are allowed but ``D Mixolydian'' is not.
 An estimated key is given a score of 1.0 when it exactly matches a ground-truth key, 0.5 when it is a perfect fifth above the ground-truth key, 0.3 when it is a relative major or minor, 0.2 when it is a parallel major or minor, and 0.0 otherwise.
+We utilized \texttt{mir\char`_eval} \cite{raffel2014mir_eval} to compute this score.
 
 The Isophonics annotations mostly follow this format, except that 21 songs contained multiple key annotations and 7 others contained non-major/minor keys.
 To simplify evaluation, we discarded these songs, leaving 179 ground-truth key annotations.
