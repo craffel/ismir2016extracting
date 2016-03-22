@@ -114,7 +114,7 @@ This specification makes MIDI files naturally suited to be used as transcription
 As a result, many MIDI files are transcriptions and are thus commonly used as training data for automatic transcription systems (see \cite{turetsky2003ground} for an early example).
 This type of data also benefits score-informed source separation methods, which utilize the score as a prior to improve source separation quality \cite{ewert2014score}.
 An additional natural use of this information is for ``instrument activity detection'', i.e.\ determining when certain instruments are being played over the course of a piece of music.
-Finally, the enumeration of note start times lends itself naturally to onset detection, and MIDI data has therefore been used for this task \cite{bello2005tutorial}.
+Finally, the enumeration of note start times lends itself naturally to onset detection, and so MIDI data has been used for this task \cite{bello2005tutorial}.
 
 \subsection{Musicological Features}
 
@@ -205,11 +205,10 @@ Finally, for many uses, the MIDI file must be aligned in time with its matching 
 The information sources enumerated in Section \ref{sec:information} are not readily available from MIDI files due to fact that they follow a low-level binary protocol.
 For example, in order to extract the time (in seconds) of all onsets from a given instrument in a MIDI file, note events which occur on the same track and channel as program change events for the instrument must be collected and their timing must be computed from their relative ticks using the global tempo change events.
 Fortunately, various software libraries have been created to facilitate this process.
-
-The Python library \texttt{pretty\char`_midi} \cite{raffel2014pretty_midi} simplifies the extraction of useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
+\texttt{pretty\char`_midi} \cite{raffel2014pretty_midi} simplifies the extraction of useful information from MIDI transcriptions by taking care of most of the low-level parsing needed to convert the information to a more human-friendly format.
 It contains functions for retrieving beats, onsets, note lists from specific instruments, and the times and values of key, tempo, and time signature changes.
 It also can be used to modify MIDI files, as well as to convert them to synthesized audio or a spectrogram-like piano roll representation.
-The aforementioned Java library \texttt{jSymbolic} contains an extensive collection of routines for computing musicological features from MIDI files.
+The aforementioned \texttt{jSymbolic} contains an extensive collection of routines for computing musicological features from MIDI files.
 Finally, both \texttt{music21} and \texttt{melisma} are capable of inferring high-level music information from symbolic data of various types, including MIDI.
 
 \subsection{Matching}
@@ -226,7 +225,7 @@ These methods make it feasible to match a MIDI file against an extremely large c
 
 There is no guarantee that a MIDI transcription for a given song was transcribed so that its timing matches an audio recording of a performance of the song.
 For the many types of ground truth data that depend on timing (e.g.\ beats, note transcription, or lyrics), the MIDI file must therefore have its timing adjusted so that it matches that of the performance.
-Fortunately, score-to-audio alignment, of which MIDI-to-audio alignment can be seen as a special ``offline'' case, has received substantial research attention. 
+Fortunately, score-to-audio alignment, of which MIDI-to-audio alignment is a special ``offline'' case, has received substantial research attention. 
 A common method is to use DTW or another edit-distance measure to find the best alignment between spectrograms of the synthesized MIDI and audio recording; see \cite{raffel2016optimizing} or \cite{ewert2012towards} for surveys.
 
 In practice, audio-to-MIDI alignment systems can fail when there are overwhelming differences in timing or deficiencies in the transcription, e.g.\ missing or incorrect notes or instruments.
@@ -243,14 +242,12 @@ A straightforward way to evaluate the quality of MIDI-derived annotations is to 
 Given a MIDI transcription and human-generated ground truth data, we can extract corresponding information from the MIDI file and compare using the evaluation metrics employed in the Music Information Retrieval Evaluation eXchange (MIREX) \cite{downie2008music}.
 We therefore leveraged the Isophonics Beatles annotations \cite{mauch2009omras2} as a source of ground truth to compare against MIDI-derived information.  MIDI transcriptions of these songs are readily available due to The Beatles' popularity.
 
-Our choice in tasks depends on the overlap in sources of information in the Isophonics annotations and MIDI transcriptions.
+Our choice in tasks depends on the overlap in sources of information in the Isophonics annotations and MIDI files.
 Isophonics includes beat times, song-level key information, chord changes, and structural segmentation.
 As noted in Section \ref{sec:information}, beat times and key changes may be included in MIDI files but there is no standard way to include chord change or structural segmentation information.
 We therefore performed experiments to evaluate the quality of key labels and beat times available in MIDI files.
 Fortuitously, these two experiments give us an insight into both song-level timing-agnostic information (key) and alignment-dependent timing-critical information (beat).
-
-To carry out these experiments, we first manually identified 545 MIDI files from our collection which had filenames indicating that they were transcriptions of songs from the Isophonics Beatles collection.
-Of the 179 songs in the Isophonics Beatles collection, we found MIDI transcriptions for all but 11.
+To carry out these experiments, we first manually identified 545 MIDI files from our collection which had filenames indicating that they were transcriptions of one of the 179 songs in the Isophonics Beatles collection; we found MIDI transcriptions for all but 11.
 The median number of MIDI transcriptions per song was 2; the song ``Eleanor Rigby'' had the most, with 14 unique transcriptions.
 
 \subsection{Key Experiment}
@@ -294,7 +291,7 @@ As with the Isophonics key annotations, some songs had multiple and/or modal key
 The mean scores resulting from comparing each dataset to the Isophonics annotations can be seen in Table \ref{tab:key}.
 At first glance, the mean score of $0.4$ achieved by MIDI key change messages is discouraging. 
 However, by omitting all MIDI files with C major key events (which achieved a mean score of $0.167$), the mean score jumps to $0.842$.
-This is comparable to the human-to-human baseline, and is substantially higher than the algorithmically estimated score.
+This is comparable to the human baseline, and is substantially higher than the algorithmically estimated score.
 We therefore propose that \textit{non-C major} MIDI key change events are as reliable as hand-annotated labels, but that C major key annotations in MIDI files are effectively useless.
 
 \subsection{Beat Experiment}
