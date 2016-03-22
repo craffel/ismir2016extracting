@@ -105,7 +105,7 @@ MIDI files are specified as a collection of ``tracks'', where each track consist
 Commonly used MIDI events are note on and note off messages, which together specify the start and end time of notes played at a given pitch on a given channel.
 Various control events also exist, such as pitch bends, which allow for finer control of the playback of the MIDI file.
 Program change events determine which instrument these events are sent to.
-The General MIDI standard defines a correspondence between program numbers and a pre-defined list of 128 instruments.
+The General MIDI standard defines a correspondence between program numbers and a predefined list of 128 instruments.
 General MIDI also specifies that all notes occurring on MIDI channel 10 play on a separate percussion instrument, which allows for drum tracks to be transcribed.
 The distribution of the total number of program change events (corresponding to the number of instruments) across the MIDI files in our collection and the distribution of these program numbers are shown in Figures \ref{fig:statistics}(a) and \ref{fig:statistics}(e) respectively.
 The four most common program numbers (shown as the four tallest bars in Figure \ref{fig:statistics}(e)) were 0 (``Acoustic Grand Piano''), 48 (``String Ensemble 1''), 33 (``Electric Bass (finger)''), and 25 (``Acoustic Guitar (steel)'').
