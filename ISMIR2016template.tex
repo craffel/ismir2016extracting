@@ -110,7 +110,7 @@ General MIDI also specifies that all notes occurring on MIDI channel 10 play on 
 The distribution of the total number of program change events (corresponding to the number of instruments) across the MIDI files in our collection and the distribution of these program numbers are shown in Figures \ref{fig:statistics}(a) and \ref{fig:statistics}(e) respectively.
 The four most common program numbers (shown as the four tallest bars in Figure \ref{fig:statistics}(e)) were 0 (``Acoustic Grand Piano''), 48 (``String Ensemble 1''), 33 (``Electric Bass (finger)''), and 25 (``Acoustic Guitar (steel)'').
 
-This specification makes MIDI files naturally suited to be used as transcriptions of pieces of music, due to the fact that they can be considered a sequence of notes played at different `velocities´ (intensities) on a collection of instruments.
+This specification makes MIDI files naturally suited to be used as transcriptions of pieces of music, due to the fact that they can be considered a sequence of notes played at different ``velocities'' (intensities) on a collection of instruments.
 As a result, many MIDI files are transcriptions and are thus commonly used as training data for automatic transcription systems (see \cite{turetsky2003ground} for an early example).
 This type of data also benefits score-informed source separation methods, which utilize the score as a prior to improve source separation quality \cite{ewert2014score}.
 An additional natural use of this information is for ``instrument activity detection'', i.e.\ determining when certain instruments are being played over the course of a piece of music.
@@ -173,7 +173,7 @@ In our collection, we found 23,801 MIDI files (about 13.3\%) which had at least 
 \subsection{What's Missing}
 \label{sec:missing}
 
-Despite the wide variety of information sources available in MIDI files outlined in the previous sections, there are various types of information which it is not possible (or not common) to store in MIDI files.
+Despite the wide variety of information sources available in MIDI files outlined in the previous sections, there are various types of information which are not possible (or not common) to store in MIDI files.
 While the General MIDI specification includes the vocal instruments ``Choir Aahs'', ``Voice Oohs'', ``Synth Choir'', ``Lead 6 (voice)'' and ``Pad 4 (choir)'', in practice there is no specific program number (or numbers) which is consistently used to transcribe vocals.
 As a result, in a given MIDI file there is no reliable way of determining which instrument is a transcription of the vocals in a song.
 Furthermore, because a substantial portion of MIDI files were designed for karaoke, the vocals may not be transcribed at all.
@@ -216,7 +216,7 @@ Finally, both \texttt{music21} and \texttt{melisma} are capable of inferring hig
 
 Apart from metadata-agnostic corpus studies such as \cite{mauch2012corpus}, determining the song a given MIDI file represents is usually required.
 Matching a given MIDI file to, for example, a corresponding entry in the Million Song Dataset \cite{bertin2011million} can be beneficial even in experiments solely involving symbolic data analysis because it can provide additional metadata for the track including its year, genre, and user-applied tags.
-Utilizing information in a MIDI file for ground-truth in audio content-based MIR tasks further requires that it be matched to an audio recording of the song, but this made difficult by the lack of a standardized method for storing song-level metadata in MIDI files (as discussed in Section \ref{sec:missing}).
+Utilizing information in a MIDI file for ground-truth in audio content-based MIR tasks further requires that it be matched to an audio recording of the song, but this is made difficult by the lack of a standardized method for storing song-level metadata in MIDI files (as discussed in Section \ref{sec:missing}).
 Content-based matching offers a solution; for example, early work by Hu et al.\cite{hu2003polyphonic} assigned matches by finding the smallest dynamic time warp (DTW) distance between spectrograms of MIDI syntheses and audio files across a corpus.
 This approach is prohibitively slow for very large collections of MIDI and/or audio files, so \cite{raffel2015large} explored learning a mapping from spectrograms to downsampled sequences of binary vectors, which greatly accelerates DTW.
 \cite{raffel2016pruning} provided further speed-up by mapping entire spectrograms to fixed-length vectors in a Euclidean space where similar songs are mapped close together.
@@ -238,8 +238,8 @@ We do not know of any research into automatically determining the quality of a M
 \section{Measuring a Baseline of Reliability for MIDI-Derived Information}
 \label{sec:measuring}
 
-Given the potential availability of ground-truth information in MIDI transcriptions, we wish to measure the reliability MIDI transcriptions found ``in the wild''.
-A straightforward way to evaluate the quality of MIDI-derived transcriptions is to compare them with hand-made annotations for the same songs.
+Given the potential availability of ground-truth information in MIDI transcriptions, we wish to measure the reliability of MIDI transcriptions found ``in the wild''.
+A straightforward way to evaluate the quality of MIDI-derived annotations is to compare them with hand-made annotations for the same songs.
 Given a MIDI transcription and human-generated ground truth data, we can extract corresponding information from the MIDI file and compare using the evaluation metrics employed in the Music Information Retrieval Evaluation eXchange (MIREX) \cite{downie2008music}.
 We therefore leveraged the Isophonics Beatles annotations \cite{mauch2009omras2} as a source of ground-truth to compare against MIDI-derived information.  MIDI transcriptions of these songs are readily available due to The Beatles' popularity.
 
@@ -250,7 +250,7 @@ We therefore performed experiments to evaluate the quality of key labels and bea
 Fortuitously, these two experiments give us an insight into both song-level timing-agnostic information (key) and alignment-dependent timing-critical information (beat).
 
 To carry out these experiments, we first manually identified 545 MIDI files from our collection which had filenames indicating that they were transcriptions of songs from the Isophonics Beatles collection.
-Of the 180 songs in the Isophonics Beatles collection, we found MIDI transcriptions for all but 11.
+Of the 179 songs in the Isophonics Beatles collection, we found MIDI transcriptions for all but 11.
 The median number of MIDI transcriptions per song was 2; the song ``Eleanor Rigby'' had the most, with 14 unique transcriptions.
 
 \subsection{Key Experiment}
@@ -263,7 +263,7 @@ An estimated key is given a score of 1.0 when it exactly matches a ground-truth 
 We utilized \texttt{mir\char`_eval} \cite{raffel2014mir_eval} to compute this score.
 
 The Isophonics annotations mostly follow this format, except that 21 songs contained multiple key annotations and 7 others contained non-major/minor keys.
-To simplify evaluation, we discarded these songs, leaving 159 ground-truth key annotations.
+To simplify evaluation, we discarded these songs, leaving 151 ground-truth key annotations.
 Of our 545 Beatles MIDIs, 221 had no key change event and 5 had more than one, which we also omitted from evaluation.
 This left 223 MIDI files for which we extracted key annotations and compared them to valid Isophonics annotations.
 Because of the preponderance of C major key change events noted in Section \ref{sec:key}, we also separately evaluated MIDI-derived C Major and non-C major instances separately to see whether they were less reliable.
@@ -342,7 +342,7 @@ We found that this undesirable behavior was primarily caused by a few issues:
 First, it is common that the alignment system would produce alignments which were slightly ``sloppy'', i.e.\ were off by one or two frames (corresponding to 23 milliseconds each) in places.
 This had less of an effect on the {\em F-measure} and {\em Any Metric Level Continuous} metrics, which are invariant to small temporal errors up to a certain threshold, but deflated the {\em Information Gain} scores because this metric rewards consistency even for fine-timing errors.
 Second, many MIDI files had tempos which were at a different metric level than the annotations (e.g.\ double, half, or a third of the tempo).
-This effected the {\em Any Metric Level Continuous} scores the least because it is invariant to these issues, except for the handful of files which were transcribed at a third of the tempo.
+This affected the {\em Any Metric Level Continuous} scores the least because it is invariant to these issues, except for the handful of files which were transcribed at a third of the tempo.
 Finally, we found that the confidence score produced by the alignment system is most reliable at producing a low score in the event of a total failure (indicated by points in the bottom left of the plots in Figure \ref{fig:beat}), but was otherwise insensitive to the more minor issues that can cause beat evaluation metrics to produce low scores.
 
 \section{Discussion}
