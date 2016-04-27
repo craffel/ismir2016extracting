@@ -257,13 +257,13 @@ We followed the MIREX methodology for comparing keys \cite{ehmann2016mirex}, whi
 Each song may only have a single key.
 All keys must be either major or minor, e.g.\ ``C\# Major'' and ``E minor'' are allowed but ``D Mixolydian'' is not.
 An estimated key is given a score of 1.0 when it exactly matches a ground truth key, 0.5 when it is a perfect fifth above the ground truth key, 0.3 when it is a relative major or minor, 0.2 when it is a parallel major or minor, and 0.0 otherwise.
-We utilized \texttt{mir\char`_eval} \cite{raffel2014mir_eval} to compute this score.
+We utilized the evaluation library \texttt{mir\char`_eval} \cite{raffel2014mir_eval} to compute this score.
 
 The Isophonics annotations mostly follow this format, except that 21 songs contained multiple key annotations and 7 others contained non-major/minor keys.
 To simplify evaluation, we discarded these songs, leaving 151 ground truth key annotations.
 Of our 545 Beatles MIDIs, 221 had no key change event and 5 had more than one, which we also omitted from evaluation.
 This left 223 MIDI files for which we extracted key annotations and compared them to valid Isophonics annotations.
-Because of the preponderance of C major key change events noted in Section \ref{sec:key}, we also separately evaluated MIDI-derived C Major and non-C major instances separately to see whether they were less reliable.
+Because of the preponderance of C major key change events noted in Section \ref{sec:key}, we also evaluated MIDI-derived C Major and non-C major instances separately to see whether they were less reliable.
 
 As a baseline, we also extracted keys using the QM Vamp Key Detector plugin \cite{cannam2015mirex} whose underlying algorithm is based on \cite{noland2007signal} which finds the key profile best correlated with the chromagram of a given song.
 This plugin achieved the highest score in MIREX 2013, and has been the only key detection algorithm submitted in 2014 and 2015.
@@ -322,16 +322,16 @@ This finer timescale is more appropriate for the beat evaluation metrics we will
 Second, the confidence scores computed using the method of \cite{raffel2016optimizing} lie in the range $[0.5, 1.0]$ where $0.5$ corresponds to ``highly confident'' and $1.0$ corresponds to ``likely wrong''; we mapped this linearly to a more easily-interpretable range of $[0.0, 1.0]$ where higher scores mean higher confidence.
 
 We used \texttt{pretty\char`_midi}'s \texttt{get\char`_beats} method to extract beat times from our 545 Beatles MIDI files, and adjusted each beat's timing according to the MIDI file's alignment to corresponding audio recordings.
-For evaluation, we used the {\em F-measure}, {\em Any Metric Level Total}, and {\em Information Gain} metrics described in \cite{davies2009evaluation}, as implemented in the evaluation library \texttt{mir\char`_eval} \cite{raffel2014mir_eval}.
+For evaluation, we used the {\em F-measure}, {\em Any Metric Level Total}, and {\em Information Gain} metrics described in \cite{davies2009evaluation}, as implemented in \texttt{mir\char`_eval}.
 As a baseline, we also computed beat locations using the \texttt{DBNBeatTracker} from the \texttt{madmom} software library,\footnote{\texttt{https://github.com/CPJKU/madmom}} which is based on the algorithm from \cite{bock2014multi}.
 This represents a state-of-the-art general-purpose beat tracker which, on the Beatles data, can reliably produce high-quality annotations.
 If MIDI-derived beat annotations are to be taken as ground truth, they must achieve scores similar to or higher than the \texttt{DBNBeatTracker}.
 
 We visualize the resulting scores in Figure \ref{fig:beat}.
-Because we don't expect beats to be extracted accurately from MIDI files that are poor transcriptions, we plotted each MIDI file as a single point whose x coordinate corresponds to the MIDI alignment confidence score and whose y coordinate is the resulting evaluation metric score achieved.
+Because we don't expect beats to be extracted accurately from MIDI files that are poor transcriptions or when alignment failed, we plotted each MIDI file as a single point whose x coordinate corresponds to the MIDI alignment confidence score and whose y coordinate is the resulting evaluation metric score achieved.
 Ideally, all points in these plots would be clustered in the bottom left (corresponding to failed alignments with low confidence scores) or top right (corresponding to a successful alignment and beat annotation extraction with a high confidence score).
 For reference, we plot the mean score achieved by the \texttt{DBNBeatTracker} as dotted lines for each metric.
-From these plots, we can see that in many cases, MIDI ground truth achieves near-perfect scores, particularly for the {\em F-Measure} and {\em Any Metric Level Total} metrics.
+From these plots, we can see that in many cases, MIDI-derived annotations achieve near-perfect scores, particularly for the {\em F-Measure} and {\em Any Metric Level Total} metrics.
 However, there is no reliable correspondence between high confidence scores and high evaluation metric scores.
 For example, while it appears that a prerequisite for an accurate MIDI-derived beat annotation is a confidence score above $.5$, there are many MIDI files which had high confidence scores but low metric scores (appearing in the bottom-right corner of the plots in Figure \ref{fig:beat}).
 
