@@ -50,7 +50,7 @@ The General MIDI standard \cite{international1991general} further specifies a co
 When paired with a General MIDI synthesizer, MIDI files have been used as a sort of {\em semantic} audio codec, with entire songs only requiring a few kilobytes of storage.
 The early availability of this ``coding method'', combined with the expense of digital storage in the 90s, made MIDI files a highly pervasive method of storing and playing back songs before the advent of the MP3.
 Even after high-quality perceptual audio codecs were developed and storage prices plummeted, MIDI files remained in use in resource-scarce settings such as karaoke machines and cell phone ringtones.
-As a result, there is an abundance of MIDI file transcriptions of music available today; through a large-scale web scrape, we obtained 178,561 MIDI files with unique MD5 checksums.  
+As a result, there is an abundance of MIDI file transcriptions of music available today; through a large-scale web scrape, we obtained 178,561 MIDI files with unique MD5 checksums.
 Given their wide availability, we believe that MIDI files are underutilized in the Music Information Retrieval community.
 
 In this paper, we start by outlining the various sources of information present in MIDI files and reference relevant works which utilize them in Section \ref{sec:information}.
@@ -226,7 +226,7 @@ These methods make it feasible to match a MIDI file against an extremely large c
 
 There is no guarantee that a MIDI transcription for a given song was transcribed so that its timing matches an audio recording of a performance of the song.
 For the many types of ground truth data that depend on timing (e.g.\ beats, note transcription, or lyrics), the MIDI file must therefore have its timing adjusted so that it matches that of the performance.
-Fortunately, score-to-audio alignment, of which MIDI-to-audio alignment is a special ``offline'' case, has received substantial research attention. 
+Fortunately, score-to-audio alignment, of which MIDI-to-audio alignment is a special ``offline'' case, has received substantial research attention.
 A common method is to use DTW or another edit-distance measure to find the best alignment between spectrograms of the synthesized MIDI and audio recording; see \cite{raffel2016optimizing} or \cite{ewert2012towards} for surveys.
 
 In practice, audio-to-MIDI alignment systems can fail when there are overwhelming differences in timing or deficiencies in the transcription, e.g.\ missing or incorrect notes or instruments.
@@ -290,7 +290,7 @@ As with the Isophonics key annotations, some songs had multiple and/or modal key
 \end{table}
 
 The mean scores resulting from comparing each dataset to the Isophonics annotations can be seen in Table \ref{tab:key}.
-At first glance, the mean score of $0.4$ achieved by MIDI key change messages is discouraging. 
+At first glance, the mean score of $0.4$ achieved by MIDI key change messages is discouraging.
 However, by omitting all MIDI files with C major key events (which achieved a mean score of $0.167$), the mean score jumps to $0.842$.
 This is comparable to the human baseline, and is substantially higher than the algorithmically estimated score.
 We therefore propose that \textit{non-C major} MIDI key change events are as reliable as hand-annotated labels, but that C major key annotations in MIDI files are effectively useless.
