@@ -178,9 +178,10 @@ While the General MIDI specification includes the vocal instruments ``Choir Aahs
 As a result, in a given MIDI file there is no reliable way of determining which instrument is a transcription of the vocals in a song.
 Furthermore, because a substantial portion of MIDI files were designed for karaoke, the vocals may not be transcribed at all.
 
-While the MIDI specification does include a ``track name'' meta-event, it is seldom used and there is no standard for its use, and so the instruments in MIDI files are further constrained to the General MIDI specification.
+While the MIDI specification does include ``track name'', ``program name'', and ``instrument name'' meta-events, they are not standardized and so are not used consistently.
 It follows that there is no simple way to retrieve the ``melody'' from a MIDI transcription, although the fact that all instruments are transcribed separately can make its estimation more straightforward than for audio files.
-To our knowledge, there has been no published research into automatically determining which instrument in a given MIDI file is a transcription of the melody or vocal line.
+For example, \cite{tang2000selection} explores the use of simple features such as the average velocity and note range within a track to predict whether it is a melody, and also finds that in a small dataset the track name can be used reliably 44.3\% of the time.
+Similarly, \cite{ponce2008mining} uses heuristic features and a random forest classifier to predict with high accuracy whether a track is a melody.
 
 There is also no explicit way for MIDI files to include chord labels or structural segmentation boundaries (e.g.\ ``verse'', ``chorus'', ``solo'').
 While this would in principle be possible thanks to the generic MIDI ``text'' meta-event, we have yet to find any MIDI files which store this information.
@@ -349,7 +350,7 @@ Our results suggest that while MIDI files have the potential to be valuable sour
 However, due to the enormous number of MIDI transcriptions available, we believe that developing better methods to leverage information present in MIDI files is a tantalizing avenue for obtaining more ground truth data for music information retrieval.
 For example, while C-major key annotations cannot be trusted, developing a highly reliable C-major vs. non-C-major classification algorithm for symbolic data (which would ostensibly be much more tractable than creating a perfect general-purpose audio content-based key estimation algorithm) would enable the reliable usage of all key change messages in MIDI files.
 Further work into robust audio-to-MIDI alignment is also warranted in order to leverage timing-critical information, as is the neglected problem of alignment confidence score reporting.
-Novel questions such as determining which MIDI instrument corresponds to the vocal or melody instrument in a given transcription, or determining whether all instruments have been transcribed, would also facilitate the use of MIDI files as ground truth transcriptions.
+Novel questions such as determining whether all instruments have been transcribed in a given MIDI file would also facilitate their use as ground truth transcriptions.
 Fortunately, all of these tasks are made easier by the fact that MIDI files are specified in a format from which it is straightforward to extract pitch information.
 Any techniques developed towards this end could also be applied to other ubiquitous symbolic digital music formats such as MusicXML \cite{good2001musicxml}.
 
