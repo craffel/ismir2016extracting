@@ -135,7 +135,7 @@ In practice, we find that this is due to the fact that even when a single tempo 
 Time signature change events further augment MIDI files with the ability to specify time signatures, and are also used to indicate the start of a measure.
 By convention, MIDI files have a time signature change at the first tick, although this is not a requirement.
 Because time signature changes are relatively rare in western popular music, the vast majority of the MIDI files in our collection contain a single time signature change, as seen in Figure \ref{fig:statistics}(c).
-Despite the fact that 4/4 is the default time signature for MIDI files and is pervasive in western popular music, a substantial portion (about half) included a non-4/4 time signature, as shown in Figure \ref{fig:statistics}(g).
+Despite the fact that 4/4 is the default time signature for MIDI files and is pervasive in western popular music, a substantial portion (about half) of the time signature changes were not 4/4, as shown in Figure \ref{fig:statistics}(g).
 
 Because MIDI files are required to include tempo information in order to specify their timing, it is straightforward to extract beat locations from a MIDI file.
 By convention, the first (down)beat in a MIDI transcription occurs at the first tick.
@@ -151,7 +151,7 @@ An additional useful event in MIDI files is the key change event.
 Any of the 24 major or minor keys may be specified.
 Key changes simply give a suggestion as to the tonal content and do not affect playback, and so are a completely optional meta-event.
 As seen in Figure \ref{fig:statistics}(d), this results in many MIDI files omitting key change events altogether.
-A further complication is that a disproportionate number (about half) of the MIDI files in our collection had key changes to the key of C major, as shown in Figure \ref{fig:statistics}(h).
+A further complication is that a disproportionate number (about half) of the key changes in the MIDI files in our collection were C major, as shown in Figure \ref{fig:statistics}(h).
 This disagrees with corpus studies of popular music, e.g.\ \cite{carlton2012analyzed} which found that only about 26\% of songs from the Billboard 100 were in C major.
 We believe this is because many MIDI transcription software packages automatically insert a C major key change at the beginning of the file.
 
